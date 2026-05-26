@@ -404,7 +404,7 @@ Desde la carpeta del proyecto:
 
 ```bash
 # Con live-server (npm install -g live-server)
-live-server
+live-server --entry-file=index.html
 ```
 
 ```bash
@@ -434,8 +434,9 @@ Este proyecto usa:
 Los módulos ES (`type="module"`) funcionan correctamente servidos por HTTP.
 Abrir el archivo directamente con `file://` suele traer problemas de carga de módulos, rutas y políticas del navegador.
 
-Además, para probar rutas como `/chat` o `/about`, necesitás que el servidor entregue `index.html` para esas rutas.
-Un servidor estático simple alcanza para navegar desde Home hacia Chat, pero si querés abrir `/chat` directamente, usá una configuración con fallback a `index.html` o Live Server.
+Además, para probar rutas como `/chat`, `/about` o `/xyz`, necesitás que el servidor entregue `index.html` para esas rutas.
+Si el servidor responde su propio 404 antes de entregar `index.html`, el router del navegador nunca llega a ejecutarse.
+Por eso, con `live-server`, usamos `--entry-file=index.html`: cualquier ruta interna sin extensión carga `index.html`, y recién ahí `router()` decide si muestra Home, Chat, About o el 404 interno.
 
 ---
 
